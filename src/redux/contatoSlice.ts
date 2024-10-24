@@ -15,7 +15,6 @@ const initialState: State = {
   contatos: [],
 };
 
-// Definição dos tipos de actions
 interface AddContatoAction extends Action {
   type: 'ADD_CONTATO';
   payload: Contato;
@@ -31,10 +30,8 @@ interface EditContatoAction extends Action {
   payload: Contato;
 }
 
-// União dos tipos de actions possíveis
 type ContatoActions = AddContatoAction | RemoveContatoAction | EditContatoAction;
 
-// Implementação do reducer
 export const contatoReducer = (state = initialState, action: ContatoActions): State => {
   switch (action.type) {
     case 'ADD_CONTATO':
