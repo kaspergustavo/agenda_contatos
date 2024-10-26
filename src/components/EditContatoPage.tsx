@@ -10,10 +10,10 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7); // Aumenta a opacidade
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
-  align-items: center; // Centraliza verticalmente
+  align-items: center;
 `;
 
 const ModalContent = styled.div`
@@ -22,7 +22,7 @@ const ModalContent = styled.div`
   border-radius: ${theme.borderRadius};
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); // Sombra mais pronunciada
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   position: relative;
 `;
 

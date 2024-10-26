@@ -16,9 +16,8 @@ const AppContainer = styled.div`
   border-radius: ${theme.borderRadius};
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
-  margin: 40px auto; /* Centraliza horizontalmente, mas com margem superior */
+  margin: 40px auto;
 `;
-
 
 const App: React.FC = () => {
   return (

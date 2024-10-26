@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import theme from '../styles/theme';
+import ErrorAlert from './ErrorAlert';
 
 const flagImages: { [key: string]: string } = {
   BR: '/flags/brazil.png',
@@ -15,23 +16,23 @@ const FormContainer = styled.form`
   width: 100%;
   max-width: 500px;
   margin-bottom: ${theme.spacing.large};
-  padding: ${theme.spacing.medium}; // Adicionado padding
-  background: ${theme.colors.white}; // Fundo branco
-  border-radius: ${theme.borderRadius}; // Bordas arredondadas
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); // Sombra suave
+  padding: ${theme.spacing.medium};
+  background: ${theme.colors.white};
+  border-radius: ${theme.borderRadius};
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
 const Input = styled.input`
-  padding: ${theme.spacing.medium}; // Ajustado para um padding mais uniforme
+  padding: ${theme.spacing.medium};
   margin-bottom: ${theme.spacing.small};
   border: 1px solid ${theme.colors.border};
   border-radius: ${theme.borderRadius};
   width: 100%;
-  transition: border 0.3s; // Transição suave na borda
+  transition: border 0.3s;
 
   &:focus {
-    border-color: ${theme.colors.primary}; // Borda azul ao focar
-    outline: none; // Remove o contorno padrão
+    border-color: ${theme.colors.primary};
+    outline: none;
   }
 `;
 
@@ -59,8 +60,8 @@ const InputMasked = styled(InputMask)`
   margin-bottom: ${theme.spacing.small};
   border: 1px solid ${theme.colors.border};
   border-radius: ${theme.borderRadius};
-  width: calc(100% - 120px); /* Adjust for select width */
-  display: inline-block; /* Align next to select */
+  width: calc(100% - 120px);
+  display: inline-block;
 `;
 
 const Button = styled.button`
@@ -71,18 +72,18 @@ const Button = styled.button`
   border-radius: ${theme.borderRadius};
   cursor: pointer;
   width: 100%;
-  transition: background-color 0.3s, transform 0.3s; // Efeito de transformação
+  transition: background-color 0.3s, transform 0.3s;
 
   &:hover {
     background-color: ${theme.colors.primaryHover};
-    transform: scale(1.02); // Leve aumento ao passar o mouse
+    transform: scale(1.02);
   }
 `;
 
 const CountryFlag = styled.img`
   width: 20px;
   height: 15px;
-  margin-right: ${theme.spacing.small}; /* Space between flag and text */
+  margin-right: ${theme.spacing.small};
 `;
 
 const ContatoForm: React.FC = () => {
@@ -90,20 +91,34 @@ const ContatoForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [telefone, setTelefone] = useState('');
   const [pais, setPais] = useState('BR');
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
+  const contatos = useSelector((state: any) => state.contatos);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const contatoExistente = contatos.find(
+      (contato: any) => contato.nome.toLowerCase() === nome.toLowerCase()
+    );
+
+    if (contatoExistente) {
+      setError('Já existe um contato com esse nome.');
+      return;
+    }
+
     const contato = { id: Date.now(), nome, email, telefone };
     dispatch({ type: 'ADD_CONTATO', payload: contato });
     setNome('');
     setEmail('');
     setTelefone('');
     setPais('BR');
+    setError('');
   };
 
   return (
     <FormContainer onSubmit={handleSubmit}>
+      {error && <ErrorAlert message={error} />}
       <Input
         type="text"
         placeholder="Nome Completo"

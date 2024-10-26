@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     padding: 0;
     background-color: ${theme.colors.background};
     color: ${theme.colors.text};
-    line-height: 1.6; // Melhorar a legibilidade
+    line-height: 1.6;
   }
 
   * {
@@ -17,11 +17,11 @@ export const GlobalStyles = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6 {
     color: ${theme.colors.primary};
-    margin: ${theme.spacing.small} 0; // Espaçamento consistente em títulos
+    margin: ${theme.spacing.small} 0;
   }
 
   button {
     cursor: pointer;
-    font-size: ${theme.fontSize.medium}; // Uniformidade de fonte
+    font-size: ${theme.fontSize.medium};
   }
 `;
